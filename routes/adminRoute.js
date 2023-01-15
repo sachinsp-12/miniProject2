@@ -3,7 +3,7 @@ const admin_route = express();
 const session = require("express-session");
 const config = require("../config/config");
 const adminController = require("../controllers/adminController");
-const adminauth = require("../middleware/adminAuth");
+const adminauth = require("../middleware/adminauth");
 const nocache = require("nocache")
 // const bodyParser = require("body-parser");
 
