@@ -1,0 +1,103 @@
+<%- include ('../partials/adminheader.ejs') %>
+
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-10 ">
+     
+          <div class="card">
+            
+            <div class="card-body">
+            
+              <h4>Add Category</h4>
+             
+              <form class="forms-sample" action="/admin/Category" method="post" >
+                <div class="form-group">
+                  <label for="exampleInputName1">Enter New Category</label>
+                  <input type="name" name="name" class="form-control" id="exampleInputName1" placeholder="Name" required>
+                  <% if (typeof message !=='undefined' ){ %>
+                    <p style="color: red"><%= message %></p>
+                    <% }%>
+                  <button type="submit" class="btn btn-success mr-2 mt-4 mb-4">Add</button>
+                </div>
+
+               </form>
+
+               <h3 class="card-title ">Category list</h3>
+      
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+
+                                  <th>
+                                   Category id
+                                  </th>
+                                  <th>
+                                    Category
+                                  </th>
+                                  <th>
+                                    isavailable
+                                  </th>
+                                  <th>
+                                    Actions
+                                  </th>
+                                  
+                                </tr>
+                              </thead>
+
+
+                              <tbody>
+                                <% if(cat.length>0 ){
+
+                                  for(let i=0;i<cat.length;i++){ %>
+                                <tr>
+                                  <td>
+                                     <%= cat[i]._id%>
+                                  </td>
+                                  <td>
+                                     <%= cat[i].category%>
+                                  </td>
+                                  <td>
+                                    
+                                    <%= cat[i].isavailable%>
+                                    </td>
+                                 
+                                    <td>
+                                      <% if(cat[i].isavailable==0 ){  %>
+                                        <button type="button" onclick="return confirm('do you want to hide category <%= cat[i].category%>')" class="btn btn-danger" style="font-size:20px; "><a style="color: white;" href="/admin/deleteCategory?id=<%= cat[i]._id %>" >Hide</a></button>
+                                        <%  }
+                                       else{ %>
+                                        <button type="button" onclick="return confirm('do you want to show the category <%= cat[i].category%>')" class="btn btn-danger" style="font-size:20px; "><a style="color: white;" href="/admin/showCategory?id=<%= cat[i]._id %>" >Show</a></button>
+                                        <% } %>
+                       
+                       
+                      
+                                    </td>
+                                </tr>
+                                  <% } 
+                   
+                  }   
+                    else{ %>
+                      <tr>
+                        <td colspan="5">users not found </td>
+                      </tr>
+                      <% } %>
+
+
+                              </tbody>
+
+
+                              </table>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+<%- include ('../partials/adminFooter.ejs') %>

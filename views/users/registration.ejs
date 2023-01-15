@@ -1,0 +1,218 @@
+<!-- <form id="form" action="/register" method="post">
+      <input id="username" type="text" name="name" placeholder="Enter name" />
+      <br /><br />
+      <input id="email" type="email" name="email" placeholder="Enter email" />
+      <br /><br />
+      <input id="mobileno" type="text" name="mno" placeholder="Enter mobile" />
+      <br /><br />
+      <input
+        id="password"
+        type="password"
+        name="password"
+        placeholder="Enter password"
+      />
+      <br /><br />
+      <input
+        id="password2"
+        type="password"
+        name="password2"
+        placeholder="Confirm password"
+      />
+     
+      <input type="submit" value="Register" />
+    </form> -->
+
+<%- include ('../partials/userHeader.ejs') %>
+<form  onsubmit="return validation()" method="post" >
+  <section class="vh-50" style="background-color: #53575e">
+    <div class="container py-5 h-50">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-6">
+          <div class="card shadow-2-strong" style="border-radius: 1rem">
+            <div class="card-body p-4 text-center">
+              <h3 class="mb-5 text-center" >Register</h3>
+
+              <% if (typeof message !=='undefined' ){ %>
+                <p style="color: red"><%= message %></p>
+                <% }%>
+                
+              <div class="form-outline mb-1" >
+                <input
+                  type="text"
+                  name="name"
+                  id="name" 
+                  class="form-control form-control-lg"
+                  placeholder="Enter your name"
+                 autocomplete="off"
+                />
+                <span  id="name-error" style="color: red;" ></span>
+                <br>
+              </div>
+
+              <div class="form-outline mb-1"  >
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  autocomplete="off"
+                  
+                  placeholder="Enter your email "
+                  class="form-control form-control-lg"
+                />
+                <span  id="email-error" style="color: red;" ></span>
+                <br>
+               
+              </div>
+
+              <div class="form-outline mb-1">
+                <input
+                  type="number"
+                  name="mno"
+                  id="mobile"
+                  autocomplete="off"
+                  
+                  placeholder="Enter your Number"
+                  class="form-control form-control-lg"
+                />
+                <span  id="mobile-error" style="color: red;" ></span>
+                <br>
+              </div>
+
+              <div class="form-outline mb-1">
+                <input
+                  type="password"
+                  name="password"
+                 id="password"
+                 placeholder="Enter the password"
+                 class="form-control form-control-lg"
+                 autocomplete="off"
+                />
+                <span  id="pwd-error" style="color: red;" ></span>
+                <br>
+              </div>
+
+              <div class="form-outline mb-1">
+                <input
+                  type="password"
+                  name="cpasswowrd"
+                  id="cpassword"
+                  autocomplete="off"
+                  placeholder="Confirm your password"
+                  class="form-control form-control-lg"
+                  /> 
+                <span  id="cpwd-error" style="color: red;" ></span>
+                <br>
+              </div>
+              <input type="submit" class="btn btn-success" name="">
+               
+              <hr class="my-4" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+
+<script type="text/javascript">
+
+function validation(){
+  var username = document.getElementById('name').value;
+  var email = document.getElementById('email').value;
+  var mobile = document.getElementById('mobile').value;
+  var password = document.getElementById('password').value;
+  var cpassword = document.getElementById('cpassword').value;
+  
+  var usercheck = /^[A-Za-z. ]{3,30}$/ ;
+var emailcheck = /^[A-Za-z_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
+  var mobilecheck = /^[0-9]{10}$/;
+  var passwordcheck = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+
+  if(usercheck.test(username)){
+    document.getElementById('name-error').innerHTML = " "
+
+  }
+  else{
+    document.getElementById('name-error').innerHTML="**username is invalid"
+    return false;
+  }
+
+  if(emailcheck.test(email)){
+    document.getElementById('email-error').innerHTML = " "
+
+  }
+  else{
+    document.getElementById('email-error').innerHTML="**email is invalid"
+    return false;
+  }
+
+  if(mobilecheck.test(mobile)){
+    document.getElementById('mobile-error').innerHTML = " "
+
+  }
+  else{
+    document.getElementById('mobile-error').innerHTML="** mobile is invalid"
+    return false;
+  }
+
+
+  if(passwordcheck.test(password)){
+    document.getElementById('pwd-error').innerHTML = " "
+
+  }
+  else{
+    document.getElementById('pwd-error').innerHTML="**password is invalid"
+    return false;
+  }
+
+  if(cpassword.match(password)){
+    document.getElementById('cpwd-error').innerHTML = " "
+  }
+  else{
+    document.getElementById('cpwd-error').innerHTML="**password does not matching "
+    return false;
+  }
+}
+</script>
+ 
+ <%- include ('../partials/userFooter.ejs') %>
+ 
+  //  if(){
+  //  document.getElementById('name-error').innerHTML = " ** please enter your name "
+  //  return false;
+  // }
+  // else if(!username.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)){
+  //  document.getElementById('name-error').innerHTML = " full name is required "
+  //  return false;
+  // }
+
+
+  // if(email==""){
+  //  document.getElementById('email-error').innerHTML = " ** please "
+  //  return false;
+  
+  // else if(!username.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)){
+  //  document.getElementById('name-error').innerHTML = " full name is required "
+  //  return false;
+  // }
+  // if(mobile==""){
+  //  document.getElementById('mobile-error').innerHTML = " ** please "
+  //  return false;
+  
+  // else if(mobile.length!=10){
+  //  document.getElementById('mobile-error').innerHTML = " must be 10 number "
+  //  return false;
+  // }
+  // if(password==""){
+  //  document.getElementById('pwd-error').innerHTML = " ** please "
+  // return false;
+  // }
+  // if(cpassword==""){
+  //  document.getElementById('cpwd-error').innerHTML = " ** please "
+  //  return false;
+  // }
+  
+
+
+
+

@@ -1,0 +1,119 @@
+<%- include ('../partials/userHeader.ejs') %>
+
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Wishlist</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Wishlist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Name</th>
+                                <th>price</th>
+                                <th>Remove</th>
+                                <th>Add to Cart</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <% if(id ){ %>
+
+                                <%  if(cartProducts.item.length==0){ %>
+                                    
+                                    <span style="color: red; font-size: 30px;">wishlist is empty</span>   
+   
+                                  <% }
+                             %>
+                             
+                                <%   for(let key of cartProducts.item){   %>
+                                <tr  style="text-align: center;">
+                                    
+                                    <td class="">
+                                        <div class="product__cart__item__pic">
+                                            <img style="width:150px  ;" src="/assets/uploads/<%= key.productId.image %>" alt="" >
+                                            
+                                           
+                                        </div>
+                                       
+                                    </td>
+                                    
+                                        
+                                    
+                                    <td class="quantity__item  cart__price">
+                                        <div class="quantity">
+                                        
+                                          <h4><%= key.productId.name%></h4>
+                                        </div>
+                                    </td>
+                                    <div class="quantity">     
+                                        <td class="cart__price">₹.<%= key.productId.price  %></td>
+                                    </div>
+                                          
+                                          <td class="cart__close"><a href="/deletewishlist?id=<%= key.productId._id %>"><i class="fa fa-close"></i></td></a>
+                                
+                                    <td>
+                                        <a href="/addToCartFromWishlist?id=<%= key.productId._id %>" class="primary-btn">Add to Cart</a>
+                                        
+                                    </div></td>
+                                </tr>
+                                <% }  
+                               
+                }   
+                  else{ %>
+                    <h1>no products to show</h1>
+                    <% } %>
+                               
+                       
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="continue__btn">
+                            <a href="/shop">Continue Shopping</a>
+                        </div>
+                    </div>
+                    <div class=" col-lg-4 col-md-4 col-sm-4"></div>
+                    <div class="product__details__cart__option  col-lg-4 col-md-4 col-sm-4">
+                           
+                            <a href="/cart" class="primary-btn">View Cart</a>
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<%- include ('../partials/userFooter.ejs') %>

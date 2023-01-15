@@ -1,0 +1,85 @@
+<%- include ('../partials/userHeader.ejs') %>
+
+
+<section class="" style="background-color: #f4f5f7;">
+    <div class="container py-5 ">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-8 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0  d-flex justify-content-center align-items-center">
+              
+              <div class="col-md-8   ">
+                <div class="card-body p-4">
+                  <h6>Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-5 mb-3">
+                        <h4>Name</h4>
+                        <h3><%= user.name %></h3>
+                        
+                      </div>
+                    <div class="col-7 mb-3">
+                      <h4>Email</h4>
+                     <h3><%= user.email %></h3> 
+                    </div>
+                    
+                    <div class="col-6 mb-10">
+                        <h4>Phone</h4>
+                        <h3><%= user.mobile %></h3>                        
+                      </div>
+
+                      <div class="col-6"></div>
+                     
+                     <div class="col-8  mt-10"><h3>Address Details</h3></div>
+                      <div class="col-4 mt-10"> <a href="/userprofile" class="btn btn-info"> Add New Adress </a> </div>
+
+                      
+                      
+                  </div>
+                 
+                  
+                  <hr class="mt-0 mb-4">
+                  <%   for(i=0;i<addressdata.length;i++){   %>
+                    <span class="btn btn-success">adress <%=i+1 %>  </span>
+                  <div class="row pt-1">
+
+                    <div class="col-5 mb-3">
+                      <h6>country</h6>
+                      <p class="text-muted"><%= addressdata[i].Country %></p>
+                    </div>
+                    <div class="col-4 mb-3">
+                      <h6>state</h6>
+                      <p class="text-muted"><%= addressdata[i].State %></p>
+                    </div>   
+                  
+                  </div>
+                  <div class="row pt-1">
+                    <div class="col-5 mb-3">
+                        <h6>House name</h6>
+                        <p class="text-muted"><%= addressdata[i].addres %></p>
+                      </div>
+                    <div class="col-4 mb-3">
+                      <h6>pin number</h6>
+                      <p class="text-muted"><%= addressdata[i].Postcode %></p>
+                    </div>
+                    <div class="col-2  ">
+                      <a href="/deleteaddress?id=<%= addressdata[i]._id %>" class="btn btn-danger my-3">Delete</a>    
+                    </div> 
+                  
+                  </div>
+                  <% } %>
+
+
+                  
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<%- include ('../partials/userFooter.ejs') %>

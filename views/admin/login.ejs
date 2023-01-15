@@ -1,0 +1,57 @@
+
+<%- include ('../partials/adminheader.ejs') %>
+
+
+
+
+
+<div class="content-wrapper">
+  <div class="row ">
+    <div class="col-md-3 grid-margin stretch-card  " ></div>
+    <!-- <div class="col-lg-4 grid-margin stretch-card"></div> -->
+    <div class="col-6 grid-margin " style="background-color: #53575e;">
+  <form action="" method="post" class="col-12 stretch-card">
+    <section class="col-12" >
+      <div class="container py-5 h-100 col-12">
+        <div class="row d-flex justify-content-center align-items-center h-100 ">
+          <div class=" col-12">
+            <div class="card shadow-2-strong" style="border-radius: 1rem;">
+              <div class="card-body p-5 text-center">
+    
+                <h3 class="mb-5">Log in</h3>
+    
+                <% if (typeof message !=='undefined' ){ %>
+                  <p style="color: red"><%= message %></p>
+                  <% }%>
+    
+                <div class="form-outline mb-4">
+                  <input type="email" name="email" id="typeEmailX-2" class="form-control form-control-lg" required/>
+                  <label class="form-label" for="typeEmailX-2">Email</label>
+                </div>
+    
+                <div class="form-outline mb-4">
+                  <input type="password" name="password" id="typePasswordX-2" class="form-control form-control-lg" required/>
+                  <label class="form-label" for="typePasswordX-2">Password</label>
+                </div>
+
+                <hr class="my-4">
+    
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Login" />
+                 
+    
+                <!-- <button class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998;"
+                  type="submit"><i class="fab fa-facebook-f me-2"></i>Sign in with facebook</button> -->
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </form>
+  </div>
+
+  <div class="col-md-3 grid-margin stretch-card  " ></div>
+
+
+  <%- include ('../partials/adminFooter.ejs') %>

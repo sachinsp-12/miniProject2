@@ -1,0 +1,67 @@
+<%- include ('../partials/adminheader.ejs') %>
+
+
+<div class="content-wrapper">
+    <div class="row">
+
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Edit Data</h4>
+        <p class="card-description">
+         
+        </p>
+        <form class="forms-sample" action="" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="exampleInputName1">Product Name</label>
+            <input type="name" name="name" class="form-control" id="exampleInputName1"  value="<%= product.name %> " required>
+          </div>
+           <div class="form-group">
+            <label for="exampleInputEmail3">Category</label>
+            <input type="text" name="category" class="form-control" id="exampleInputEmail3"  value="<%= product.category %> ">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword4">Rating</label>
+            <input type="text" name="rating"class="form-control" id="exampleInputPassword4" value="<%= product.rating %>">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputCity1">Price</label>
+            <input type="text" name="price" class="form-control" id="exampleInputCity1"  value="<%= product.price %>">
+          </div>
+          <!-- <div class="form-group">
+            <label for="exampleInputCity1"> is stock available </label>
+            <input type="text" name="available " class="form-control" id="exampleInputCity1" value="<%= product.available %>">
+          </div> -->
+          <div class="form-group">
+            <label for="exampleInputCity1">available stock</label>
+            <input type="text" name="stock" class="form-control" id="exampleInputCity1" value="<%=  product.stock %>">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputCity1">is available</label>
+            <input type="text" name="isavailable" class="form-control" id="exampleInputCity1" value="<%=  product.isavailable %>">
+          </div>
+
+
+          <div class="form-group">
+            <label for="exampleTextarea1">Description</label>
+            <textarea class="form-control" name="description" id="exampleTextarea1" rows="2"  value="<%=  product.description%>" ></textarea>
+          </div> 
+          <div class="d-flex flex-row align-items-center mb-4">
+            <div class="form-outline flex-fill mb-0">
+            <label class="form-label" for="form3Example4c">Image</label>
+            <input type="file" id="form3Example4c" class="form-control" name="image" value="<%=  product.image%>" />
+          </div>
+        </div>
+          <button type="submit" class="btn btn-success mr-2">Submit</button>
+          <button class="btn btn-light">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <%- include ('../partials/adminFooter.ejs') %>
+
+
+  

@@ -1,0 +1,322 @@
+<%- include ('../partials/adminheader.ejs') %>
+
+
+
+
+<div class="content-wrapper">
+<div class="row">
+    <div class="col-10 ">
+ 
+      <div class="card">
+        
+        <div class="card-body">
+          <h2 class="card-title ">Order History</h2>
+          <!-- <button class="btn btn-danger float-right" ><a href="/admin/addproduct"  style="font-size: 20px; color: white;">Add Product</a> </button>  -->
+         
+
+          <div class="d-flex">
+            <div class="m-3">
+              <a
+                style="font-weight: bold; border-radius: 20px"
+                href="/admin/orderhistory?id=ALL"
+                class="active btn btn-primary "
+              >
+                <span>All Orders</span>
+              </a>
+            </div>
+            <div class="m-3">
+              <a
+                style="font-weight: bold; border-radius: 20px"
+                href="/admin/orderhistory?id=CONFIRM"
+                class="btn btn-primary"
+              >
+                <span>Confirmed Orders</span>
+              </a>
+            </div>
+            <div class="m-3">
+              <a
+                style="font-weight: bold; border-radius: 20px"
+                href="/admin/orderhistory?id=DELIVERED"
+                class="btn btn-primary"
+              >
+                Delivered Orders
+              </a>
+            </div>
+          </div>
+<div class="table-responsive">
+    <table id="orderlist" class="table">     
+          <% if(id=='CONFIRM' ){ %>
+        
+         
+              <thead>
+                <tr>
+                  <th>
+                   Order Id
+                  </th>
+                  <th>
+                   Customer Id
+                  </th>
+                  <th>
+                    Payment mode
+                  </th>
+                  <th>
+                    Offer
+                 
+                  </th>
+                  <th>
+                    Total Price
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                    
+                  <th>
+                   Actions
+                  </th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <% if(order.length>0 ){
+
+                  for(let i=0;i<order.length;i++){ %>
+                    <% if(order[i].status=="CONFIRM"){ %>
+                        <tr>
+                      <td>
+                         <%= order[i]._id%>
+                      </td>
+                      <td>
+                        <%= order[i].name %>
+                      </td>
+                      <td>
+                        <%= order[i].payment %>
+                      </td>
+                      <td>
+                        <%= order[i].offer %>
+                      </td>
+                      <td>
+
+                        <%= order[i].products.totalPrice %>
+
+                                            </td>
+                     <td>
+                        <%=order[i].status %>
+                        </td>
+                       
+                      <td>
+
+                        <button type="button" class="btn btn-danger" style="font-size:20px; width:20vh;"><a style="color: white; width: fit-content;" href="/admin/cancelorder?id=<%=order[i]._id %>">Cancel</a></button>
+                        <br>
+                        <button type="button" class="btn btn-success" style="font-size:20px; width:20vh;"><a style="color: white; width: fit-content;" href="/admin/deliverorder?id=<%=order[i]._id %>"> Delivered </a></button>
+                        <br>                                    
+                         <button type="button" class="btn btn-info" style="font-size:20px ; "><a style="color: white; width: fit-content;" href="/admin/product-details?id=<%= order[i].products.item[0] %>">view</a></button>                
+            
+                        </td>
+                        
+                       
+                    </tr>
+                    <%  } %>
+                   
+                    <% } 
+                   
+                  }   
+                    else{ %>
+                      <tr>
+                        <td colspan="5">users not found </td>
+                      </tr>
+                      <% } %>
+              </tbody>
+            </table>
+        </div>
+             
+              
+        
+          
+        <div class="table-responsive">
+    <table id="orderlist" class="table"> 
+
+          <% }else if(id=='DELIVERED' ){ %>
+
+           
+              <thead  >
+                <tr>
+                  <th>
+                   Order Id
+                  </th>
+                  <th>
+                   Customer Id
+                  </th>
+                  <th>
+                    Payment mode
+                  </th>
+                  <th>
+                    Offer
+                 
+                  </th>
+                  <th>
+                    Total Price
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                    
+                  <th>
+                   Actions
+                  </th>
+    
+                </tr>
+              </thead>
+              <tbody>
+                <% if(order.length>0 ){
+
+                  for(let i=0;i<order.length;i++){ %>
+
+                    <% if(order[i].status=="DELIVERED"){ %>
+
+                    <tr>
+                      <td>
+                         <%= order[i]._id%>
+                      </td>
+                      <td>
+                        <%= order[i].name %>
+                      </td>
+                      <td>
+                        <%= order[i].payment %>
+                      </td>
+                      <td>
+                        <%= order[i].offer %>
+                      </td>
+                      <td>
+
+                        <%= order[i].products.totalPrice %>
+
+                                            </td>
+                     <td>
+                        <%=order[i].status %>
+                        </td>
+                       
+                      <td>                       
+                        
+                        <button type="button" class="btn btn-info" style="font-size:20px ; "><a style="color: white;" href="/admin/product-details?id=<%= order[i]._id %>">view</a></button>
+                        </td>
+                       
+                       
+                    </tr>
+                    <% } %>
+                   
+                    <%  } 
+                }  
+                 else{ %>
+                      <tr>
+                        <td colspan="5">users not found </td>
+                      </tr>
+                      <% } %>
+              </tbody>
+
+            </table>
+        </div>     
+              
+            
+          
+        <div class="table-responsive">
+    <table id="orderlist" class="table"> 
+          <% }else{ %>
+
+            
+              <thead>
+                <tr>
+                  <th>
+                   Order Id
+                  </th>
+                  <th>
+                   Customer Id
+                  </th>
+                  <th>
+                    Payment mode
+                  </th>
+                  <th>
+                    Offer
+                 
+                  </th>
+                  <th>
+                    Total Price
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                    
+                  <th>
+                   Actions
+                  </th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <% if(order.length>0 ){
+
+                  for(let i=0;i<order.length;i++){ %>
+                    <tr>
+                      <td>
+                         <%= order[i]._id%>
+                      </td>
+                      <td>
+                        <%= order[i].name %>
+                      </td>
+                      <td>
+                        <%= order[i].payment %>
+                      </td>
+                      <td>
+                        <%= order[i].offer %>
+                      </td>
+                      <td>
+
+                        <%= order[i].products.totalPrice %>
+
+                                            </td>
+                     <td>
+                        <%=order[i].status %>
+                        </td>
+                       
+                      <td>                        
+                        <button type="button" class="btn btn-danger" style="font-size:20px; width:22vh;  margin-bottom: 10px;"><a style="color: white;  width: fit-content;" href="/admin/cancelorder?id=<%=order[i]._id %>">Cancel</a></button>
+                        <br>
+                        <button type="button" class="btn btn-success" style="font-size:20px; width:22vh;  margin-bottom: 10px;"><a style="color: white;" href="/admin/deliverorder?id=<%=order[i]._id %>">Delivered</a></button>
+                        <br>
+                        <button type="button" class="btn btn-info" style="font-size:20px ; "><a style="color: white;" href="/admin/product-details?id=<%= order[i]._id %>">view</a></button>                     
+                        </td>
+                       
+                    </tr>
+                    <% } 
+                   
+                  }   
+                    else{ %>
+                      <tr>
+                        <td colspan="5">users not found </td>
+                      </tr>
+                      <% } %>
+              </tbody>
+
+             
+              
+            </table>
+        </div>  
+
+          <% } %>
+
+       
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready( function () {
+    $('#orderlist').DataTable();
+    } );
+</script>
+
+
+
+
+<%- include ('../partials/adminFooter.ejs') %>

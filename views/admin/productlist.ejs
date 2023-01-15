@@ -1,0 +1,113 @@
+<%- include ('../partials/adminheader.ejs') %>
+
+
+
+
+<div class="content-wrapper">
+<div class="row">
+    <div class="col-10 ">
+ 
+      <div class="card">
+        
+        <div class="card-body">
+          <h4 class="card-title ">Product List</h4>
+          <button class="btn btn-danger float-right" ><a href="/admin/addproduct"  style="font-size: 20px; color: white;">Add Product</a> </button> 
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>
+                   Name
+                  </th>
+                  <th>
+                    Category
+                  </th>
+                  <th>
+                    Stock
+                  </th>
+                  <th>
+                    Rating
+                  </th>
+                  <th>
+                    Price
+                    <th>
+                      isavailable
+                    </th>
+                  </th>
+                  <th>
+                    Image
+                  </th>
+                
+                  <th>
+                   Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(product.length>0 ){
+
+                  for(let i=0;i<product.length;i++){ %>
+                    <tr>
+                      <td>
+                         <%= product[i].name%>
+                      </td>
+                      <td>
+                        <%= product[i].category %>
+                      </td>
+                      <td>
+                        <%= product[i].stock %>
+                      </td>
+                      <td>
+                        <%= product[i].rating %>
+                      </td>
+                      <td>
+                        <%= product[i].price %>
+                      </td>
+                      <td>
+                        <%= product[i].isavailable %>
+                        </td>
+                      <td>
+                                                    <% if(product[i].image) { %>
+                                                        <img src="/assets/uploads/<%= product[i].image %>"
+                                                            width="200px" height="100vh">
+                                                        <% }else{ %>
+                                                            Image Not Found
+                                                        <% } %>
+                                            </td>
+                      
+                      <td>
+
+                        <button type="button"  class="btn btn-info" style="font-size:20px ; "><a style="color: white;" href="/admin/productDetails?id=<%= product[i]._id %>">view</a></button>
+                        <button type="button" class="btn btn-primary" style="font-size:20px; "><a style="color: white;" href="/admin/editproduct?id=<%= product[i]._id %>" >Edit</a></button>
+                        <button type="button" onclick="return confirm('do you want to delete  <%= product[i].name%> %>')" class="btn btn-danger" style="font-size:20px ; "><a style="color: white;" href="/admin/delete-product?id=<%= product[i]._id %>">Delete</a></button>
+                        
+                        
+                        
+                        </td>
+                       
+                    </tr>
+                    <% } 
+                   
+                  }   
+                    else{ %>
+                      <tr>
+                        <td colspan="5">users not found </td>
+                      </tr>
+                      <% } %>
+              </tbody>
+
+             
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+<%- include ('../partials/adminFooter.ejs') %>

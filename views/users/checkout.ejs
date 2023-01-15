@@ -1,0 +1,299 @@
+<%- include ('../partials/userHeader.ejs') %>
+
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Check Out</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+
+            <div class="cart__discount">
+                <h6>Discount codes</h6>
+                
+                <form action="/add-coupon" method="post">
+                    <div class="col-4">
+                        <input type="text" placeholder="Coupon code" name="offer" style="font-size:5vh ;">
+                        <input type="submit"  class="btn btn-info" value="Apply" style="font-size:2vh ;">
+                    </div>
+                   
+                    <!-- <button type="submit">Apply</button> -->
+                </form>
+                <% if (nocoupon){ %>
+                    <p style="color: red">Coupon already redeemed</p>
+                    <% }%>
+            </div>
+          <form action="/payment" method="post" id="form"> 
+             <% if(addreslength>0 ){ %>  
+                <a href="/userProfile" class="btn btn-info">Add New Adress </a> 
+                <%   for(let key of adress.item){   %>
+                    <div class="checkout__input__checkbox mt-2 mb-2" >
+                       <a href="/checkout?id=<%=adress.item.indexOf(key)%>" class="btn btn-success"> Address <%=  adress.item.indexOf(key)+1 %>  <br> </a>
+                        
+                    </div> 
+
+                    <% }
+
+                      %>
+                       
+        
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        
+                            
+                            <h6 class="checkout__title">Billing Details</h6>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="checkout__input">
+                                        <p>Full Name <span></span></p>
+                                        <input name="name" value="<%=  value.Name %>"  type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Country <span>*</span></p>
+                                <input value="<%=  value.Country %>" name="country" type="text">
+                            </div>
+                            <div class="checkout__input">
+                                <p>Address<span></span></p>
+                                <input value="<%=  value.addres %>" name="address" type="text" placeholder="Street Address" class="checkout__input__add">
+                            </div>
+                            <div class="checkout__input">
+                                <p>State<span>*</span></p>
+                                <input value="<%=  value.State %>" name="state" type="text">
+                            </div>
+                            <div class="checkout__input">
+                                <p>Postcode<span>*</span></p>
+                                <input value="<%=  value.Postcode %>" name="postcode" type="text">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phone<span>*</span></p>
+                                        <input value="<%=  value.Phone %>" name="phone" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input value="<%=  value.Email %>" name="email" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                 <div class="cart__discount">
+                                  
+                                
+                                </div>
+                            </div> 
+                           
+                                <h4 class="order__title">Your order</h4>
+                                <div class="checkout__order__products">Product <span>Total</span></div>
+                                <ul class="checkout__total__products">
+                                    <% if(id ){ %>
+    
+    
+                            
+                                        <%   for(let key of cartProducts.item){   %>
+                                                
+                                            <li> <%= key.productId.name %> <span>₹.<%= key.productId.price *  key.qty  %></span></li>
+                                           
+                                            <% }  
+                       
+                                        }   
+                                          else{ %>
+                                            <h1>no products to show</h1>
+                                            <% } %>
+                                </ul>
+                                <%   if(offer){ %>
+                                    <ul class="checkout__total__all">
+                                    <li>Subtotal <span>₹.<%= cartProducts.totalPrice %></span></li>
+
+                                    <li>Total <span>₹.<%= cartProducts.totalPrice %></span></li>
+                                    
+                                    <li>Total after discount <span>₹.<%=couponTotal %></span></li>
+                                    </ul>
+                              <%  }
+                                else{%>
+                                    <ul class="checkout__total__all"></ul>
+                                    <li>Subtotal <span>₹.<%= cartProducts.totalPrice %></span></li>
+
+                                   <li>Total <span>₹.<%= cartProducts.totalPrice %></span></li>
+                                </ul> 
+                                <%    } %>
+                                
+                                 
+                                    
+                            
+                       
+                                <div class="checkout__input__checkbox">
+                                    <label for="payment">
+                                        COD
+                                        <input value="COD" name="payment" type="checkbox" id="payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="checkout__input__checkbox">
+                                    <label for="paypal">
+                                        Paypal
+                                        <input value="Paypal" name="payment" type="checkbox" id="paypal">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <button type="button" onclick="checkPayment(this,'<%= cartProducts.totalPrice %>')" class="site-btn"> PLACE ORDER  </button>
+                        </div>
+                     </div>
+                        
+            
+                
+                        
+              
+                 
+                 <%   }  
+
+
+                 else{ %>
+                               
+                   
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="checkout__input">
+                                        <p>Full Name <span>*</span></p>
+                                        <input name="name" value=""  type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Country <span>*</span></p>
+                                <input value="" name="country" type="text">
+                            </div>
+                            <div class="checkout__input">
+                                <p>Address<span>*</span></p>
+                                <input value="" name="address" type="text" placeholder="Street Address" class="checkout__input__add">
+                            </div>
+                            <div class="checkout__input">
+                                <p>State<span>*</span></p>
+                                <input value="" name="state" type="text">
+                            </div>
+                            <div class="checkout__input">
+                                <p>Postcode<span>*</span></p>
+                                <input value="" name="postcode" type="text">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phone<span>*</span></p>
+                                        <input value="" name="phone" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input value="" name="email" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                    
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                 <div class="cart__discount">
+                                    
+                                
+                                </div>
+                            </div> 
+                            
+                            
+                                <h4 class="order__title">Your order</h4>
+                                <div class="checkout__order__products">Product <span>Total</span></div>
+                                <ul class="checkout__total__products">
+                                    <% if(id ){ %>
+                                        <%   for(let key of cartProducts.item){   %>
+                                                
+                                            <li> <%= key.productId.name %> <span>₹.<%= key.productId.price *  key.qty  %></span></li>
+                                           
+                                            <% }  
+                       
+                                        }   
+                                          else{ %>
+                                            <h1>no products to show</h1>
+                                            <% } %>
+                                </ul>
+                                <%   if(offer){ %>
+                                    <ul class="checkout__total__all">
+                                    <li>Subtotal <span>₹.<%= cartProducts.totalPrice %></span></li>
+
+                                    <li>Total <span>₹.<%= cartProducts.totalPrice %></span></li>
+                                    
+                                    <li>Total after discount <span> <%= couponTotal %></span></li>
+                                    </ul>
+                              <%  }
+                                else{%>
+                                    <ul class="checkout__total__all"></ul>
+                                    <li>Subtotal <span>₹.<%= cartProducts.totalPrice %></span></li>
+
+                                   <li>Total <span>₹.<%= cartProducts.totalPrice %></span></li>
+                                </ul> 
+                                <%    } %>
+                                <div class="checkout__input__checkbox">
+                                    <label for="payment">
+                                        COD
+                                        <input value="COD" name="payment" type="radio" id="payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="checkout__input__checkbox">
+                                    <label for="paypal">
+                                        Paypal
+                                        <input  type="radio" id="paypal" name="payment"
+                                        value="paypal">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <button type="button" onclick="checkPayment(this,'<%= cartProducts.totalPrice %>')" class="site-btn"> PLACE ORDER  </button>
+                        </div>
+                    </div>
+                
+                        <% }
+                        
+                            
+                        %>
+                    </form> 
+
+               
+               
+              
+                   
+                               
+                                                    
+            
+               
+              
+           
+        </div>
+   
+    </div>
+</section>
+
+
+
+<%- include ('../partials/userFooter.ejs') %>

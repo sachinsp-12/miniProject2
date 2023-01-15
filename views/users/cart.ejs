@@ -1,0 +1,108 @@
+<%- include ('../partials/userHeader.ejs') %>
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Cart</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <% if(id ){ %>
+                                <%  if(cartProducts.item.length==0){ %>
+                                    
+                                    <span style="color: red; font-size: 30px;">Cart is empty</span>   
+   
+                                  <% }
+                             %>
+                        
+                                <%   for(let key of cartProducts.item){   %>
+                                <tr>
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                            <img style="width:100px  ;" src="/assets/uploads/<%= key.productId.image %>" alt="" >
+                                            <h4><%= key.productId.name%></h4>
+                                           <h3> <strong>₹.<%= key.productId.price %></strong></h3> 
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                        <div class="quantity">
+                                          <form action="./edit_Quantity?id=<%= key._id %>" method="post">
+                                            <div class="quantity">
+                                                <button  type="button" onclick="count(-1,'<%= key._id %>','<%= key.price %>')" id="butn" >-</button>
+                                                <span id="<%= key._id %>"><%= key.qty %></span>
+                                                <button type="button" onclick="count(1,'<%= key._id %>','<%= key.price %>','<%= key.productId.stock %>')" id="butn">+</button>
+                                             </div>
+                                        </div>
+                                          </form>  
+                                           
+                                        </div>
+                                    </td>
+                                     <td class="cart__price">₹ <span id="<%= key._id %>qn"><%= key.price *  key.qty  %></span></td>
+                                    <td class="cart__close"><a href="/deletecart?id=<%= key.productId._id %>"><i class="fa fa-close"></i></td></a>
+                                </tr>
+                                <% }  
+                   
+                }   
+                  else{ %>
+                    <h1>no products to show</h1>
+                    <% } %>
+                               
+                       
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn">
+                            <a href="/shop">Continue Shopping</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn update__btn">
+                          <h4> <i class="fa fa-spinner"></i>Total Amount <span>₹<h4 id="total_price"><%= cartProducts.totalPrice %></h4></span></h4> 
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-4">
+                
+                <div class="cart__total">
+                    <h6>Cart total</h6>
+                    <ul>
+
+                        <li>Total <span>₹ <span id="total_price2"><%= cartProducts.totalPrice %></span></span></li>
+                
+                    </ul>
+                    <a href="/checkout?id=0" class="primary-btn">Proceed to checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include ('../partials/userFooter.ejs') %>

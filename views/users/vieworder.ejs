@@ -1,0 +1,132 @@
+<%- include ('../partials/userHeader.ejs') %>
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Order Details</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Order Details</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>                  
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <% if(id ){ %>
+                                
+                                <%   for( let i=0;i<orderitem.item.length;i++){   %>
+                                    <tr>
+                                        
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                             <img style="width:100px  ;" src="/assets/uploads/<%= orderitem.item[i].productId.image %>" alt="" >                                                           
+                                        </div>
+                                       
+                                    </td>
+                                    <td class="product__cart__item"> <h4> <%= orderitem.item[i].productId.name %> </h4> </td>
+                                    <td class="product__cart__item" style="text-align: center;"><h4 ><%= orderitem.item[i].qty %></h4> </td>
+                                    <td class="product__cart__item"><h4><%= orderitem.item[i].price %></h4></td>
+                                    <td class=" product__cart__item"><h4>₹.<%=orderitem.item[i].price * orderitem.item[i].qty  %></h4></td>
+                                    <td class="product__cart__item"><h4><%= order.status %> </h4> </td>                                                                                                                                    
+                                </tr>
+                                 
+                                <% }  
+                                
+                   
+                }   
+                  else{ %>
+                    <h1>no products to show</h1>
+                    <% } %>
+                               
+                       
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn">
+                            <a href="/shop">Continue Shopping</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn update__btn">
+                            <a href="#"><i class="fa fa-spinner"></i>Total Amount <span>₹ <%= order.products.totalPrice %></span> </a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <div class="col-lg-4">
+                
+                <div class="cart__total">
+                 
+                    <h6> Order Details</h6>
+                    <ul>
+
+                        <% if(order.discount>0){ %>
+                           
+                            
+                        <li>Total   <span>₹ <%= order.products.totalPrice %> </span></li>
+                        <li>Offer Name  <span><%= order.payment %> </span></li>
+                         <li>Discount <span><%= order.discount %> % </span></li>
+                        <li>Total after discount <span>₹  <%=(order.products.totalPrice) *(100-order.discount)/100 %></span></li>
+
+                        <%   }   
+                  else{ %>
+                    
+                        <li>Total <span>₹ <%= order.products.totalPrice %></span></li>
+                    <% } %>
+
+                </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 mt-3">
+                        <div class="continue__btn">
+                            <a href="/deleteorder?id=<%= order._id %>" class="btn btn-danger ">Cancel Order</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>                       
+                       
+                           
+                    
+
+                        
+     
+
+
+
+
+
+
+
+
+
+
+<%- include ('../partials/userFooter.ejs') %>
