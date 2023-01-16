@@ -91,10 +91,11 @@
                         <% if(order.discount>0){ %>
                            
                             
-                        <li>Total   <span>₹ <%= order.products.totalPrice %> </span></li>
+                       
                         <li>Offer Name  <span><%= order.payment %> </span></li>
                          <li>Discount <span><%= order.discount %> % </span></li>
-                        <li>Total after discount <span>₹  <%=(order.products.totalPrice) *(100-order.discount)/100 %></span></li>
+                         <li>Total   <span>₹ <%= order.products.totalPrice %> </span></li>
+                        
 
                         <%   }   
                   else{ %>

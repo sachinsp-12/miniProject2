@@ -80,16 +80,12 @@
                                                   
                                                 </div>      
                                             </td>
-                                            <% if( key.offer ){ %> 
+                                
                                             <td class="quantity__item">
                                                 <div class="quantity">                                                                             
                                                   <h3>₹ <%=key.products.updatedPrice %></h3>                                                 
                                                 </div>      
-                                            </td>
-                                            <%   } 
-                                             else{ %>
-                                                <h3> ₹ <%=key.products.totalPrice %></h3>
-                                           <% } %>   
+                                            </td>                                           
                                             <td class="quantity__item">
                                                 <div class="quantity">                                                                                                                                       
                                                    <a href="vieworder?id=<%=key._id %>" class="btn btn-info my-2">View</a>
