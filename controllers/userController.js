@@ -847,7 +847,8 @@ const storeOrder = async (req, res) => {
       console.log(completeUser.cart.totalPrice)
       console.log("fdgs    "+completeUser.cart)
       // console.log('CompleteUser: ', completeUser);
-      userData.cart.totalPrice = session.couponTotal;
+      // userData.cart.totalPrice = session.couponTotal;
+      userData.cart.updatedPrice = session.couponTotal;
       const updatedTotal = await userData.save();
       
       if (completeUser.cart.totalPrice > 0) {
@@ -1071,6 +1072,7 @@ const orderHistory = async(req,res)=>{
   console.log(" user order history")
   const orderdata = await Order.find({userId:req.session.userId})
   console.log(orderdata.length)
+  
   res.render("orderhistory",{order:orderdata})
 
 }
