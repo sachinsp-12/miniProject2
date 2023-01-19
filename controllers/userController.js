@@ -857,8 +857,7 @@ const storeOrder = async (req, res) => {
 
           userId: session.userId,
           country: req.body.country,
-          name: req.body.name,
-          
+          name: req.body.name,          
           address: req.body.address,         
           state: req.body.state,
           postcode: req.body.postcode,
@@ -908,19 +907,10 @@ const storeOrder = async (req, res) => {
         
         
         console.log(orderData);
-        // console.log(req.body.payment);
-        // await orderData.save();
+      
         if (req.body.payment === 'COD') {
           res.redirect('/success');
-        // } else if (req.body.payment === 'PayPal') {
-        //   const usTotal=(completeUser.cart.totalPrice)/80;
-        //   console.log(usTotal);
-        //   res.render('user/paypal', {
-        //     userId: session.userId,
-        //     total: usTotal.toFixed(2),
-        //     count: userData.cart.totalqty,
-        //     wcount: userData.wishlist.totalqty,
-        //   });
+        
         } else {
           res.redirect('/success');
         }

@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__text">
-                    <h4>Order Details</h4>
+                    <h4>View Order</h4>
                     <div class="breadcrumb__links">
                         <a href="./index.html">Home</a>
                         <a href="./shop.html">Shop</a>
-                        <span>Order Details</span>
+                        <span>View Order </span>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                            
                             
                        
-                        <li>Offer Name  <span><%= order.payment %> </span></li>
+                        <li>Offer Name  <span><%= order.offer %> </span></li>
                          <li>Discount <span><%= order.discount %> % </span></li>
                          <li>Total   <span>₹ <%= order.products.totalPrice %> </span></li>
                         
@@ -113,21 +113,6 @@
             </div>
         </div>
     </div>
-</section>                       
-                       
-                           
-                    
-
-                        
-     
-
-
-
-
-
-
-
-
-
-
+</section>      
+                 
 <%- include ('../partials/userFooter.ejs') %>
