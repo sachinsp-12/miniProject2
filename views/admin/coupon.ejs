@@ -28,19 +28,14 @@
             <input type="number" name="discount" class="form-control" id="exampleInputName1" placeholder="" required>
           </div>
           
-         
+          <% if (typeof message !=='undefined' ){ %>
+            <p style="color: red"><%= message %></p>
+            <% }%> 
           
            
           <button type="submit" class="btn btn-success mr-2">Submit</button>
           <button class="btn btn-light" >Cancel</button>
         </form>
-
-
-
-
-
-
-
 
           <h4 class="card-title ">Coupon list</h4>
           <button class="btn btn-danger float-right" ><a href="/admin/addproduct"  style="font-size: 20px; color: white;">Add Product</a> </button> 
@@ -86,10 +81,10 @@
                                   <td>
 
                                     <% if(coupondata[i-1].isavailable==0 ){  %>
-                                        <button type="button" onclick="return confirm('do you want to hide category <%= coupondata[i-1].name%>')" class="btn btn-danger" style="font-size:20px; "><a style="color: white;" href="/admin/deleteCategory?id=<%= coupondata[i-1]._id %>" >Hide</a></button>
+                                        <button type="button" class="btn btn-danger" style="font-size:20px; "><a class="hide" style="color: white;" href="/admin/deleteCoupon?id=<%= coupondata[i-1]._id %>" >Hide</a></button>
                                         <%  }
                                        else{ %>
-                                        <button type="button" onclick="return confirm('do you want to show the category <%= coupondata[i-1].name%>')" class="btn btn-danger" style="font-size:20px; "><a style="color: white;" href="/admin/showCategory?id=<%= coupondata[i-1]._id %>" >Show</a></button>
+                                        <button type="button"  class="btn btn-danger" style="font-size:20px; "><a class="retrieve" style="color: white;" href="/admin/showCoupon?id=<%= coupondata[i-1]._id %>" >Show</a></button>
                                         <% } %>                                                                                                
                                     </td>
                                 </tr>
@@ -104,8 +99,6 @@
 
 
                               </tbody>
-
-             
               
             </table>
           </div>

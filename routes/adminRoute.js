@@ -3,7 +3,7 @@ const admin_route = express();
 const session = require("express-session");
 const config = require("../config/config");
 const adminController = require("../controllers/adminController");
-const adminauth = require("../middleware/adminauth");
+const adminauth = require("../middleware/adminAuth");
 const nocache = require("nocache")
 // const bodyParser = require("body-parser");
 
@@ -46,6 +46,7 @@ admin_route.get("/userProfile",adminauth.isLogin,adminController.user_Profile);
 admin_route.get("/productlist",adminauth.isLogin,adminController.productlist);
 admin_route.get("/addproduct",adminauth.isLogin,adminController.addproduct);
 admin_route.get("/delete-product",adminauth.isLogin,adminController.deleteproduct);
+admin_route.get("/retrieve-product",adminauth.isLogin,adminController.retrieveproduct);
 admin_route.get("/editproduct",adminauth.isLogin,adminController.editproduct);
 admin_route.get("/product-details",adminauth.isLogin,adminController.viewOrderProduct)
 admin_route.get("/productDetails",adminauth.isLogin,adminController.viewProduct)
@@ -64,6 +65,7 @@ admin_route.get("/showCategory",adminauth.isLogin,adminController.showCategory);
 admin_route.get("/coupon",adminauth.isLogin,adminController.loadCoupon);
 admin_route.post("/coupon",adminController.addCoupon);
 admin_route.get("/deleteCoupon",adminController.deleteCoupon);
+admin_route.get("/showCoupon",adminController.showCoupon);
 
 admin_route.get("/orderhistory",adminauth.isLogin,adminController.orderHistory);
 admin_route.get("/cancelorder",adminauth.isLogin,adminController.cancelOrder);

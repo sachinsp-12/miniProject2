@@ -62,10 +62,6 @@ const orderSchema = new mongoose.Schema({
         totalPrice:{
             type:Number,
             default:0
-        },
-        updatedPrice:{
-            type:Number,
-            default:0
         }
     },
     productReturned:[{

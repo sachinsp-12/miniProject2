@@ -112,6 +112,7 @@
 </Script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
+const form=document.getElementById('form');
 const submt=()=>{
     const form=document.getElementById('form');
     form.submit()
@@ -160,9 +161,10 @@ rzp1.on('payment.failed', function (response){
       },
     });   
 }else{
+    console.log("form",form);
     form.submit()
 }
 }
-  
+
 </script>
 </html>

@@ -730,7 +730,7 @@ const  checkOut = async(req,res)=>{
     const id = req.query.id
     userSession = req.session;
     if(userSession){
-    console.log("coupon applied or not  "+session.offer)
+    
     const userData =await User.findById({ _id:userSession.userId })
     const completeUser = await userData.populate('cart.item.productId')
     const adressData = await userData.populate('Address.item')
@@ -839,25 +839,29 @@ const storeOrder = async (req, res) => {
     session = req.session;
     if (session.userId) {
       const offerapplied = req.body.offer;
-      console.log(offerapplied)
+      console.log("offer aplied=",offerapplied)
       const userData = await User.findById({ _id: session.userId });
-      console.log("adressssss"+userData)
+      // console.log("adressssss"+userData)
       const completeUser = await userData.populate('cart.item.productId');
       const offerdata = await   Coupon.findOne({name:session.offer.name})
-      console.log(completeUser.cart.totalPrice)
-      console.log("fdgs    "+completeUser.cart)
+      // console.log(completeUser.cart.totalPrice)
+      // console.log("fdgs    "+completeUser.cart)
       // console.log('CompleteUser: ', completeUser);
-      // userData.cart.totalPrice = session.couponTotal;
-      userData.cart.updatedPrice = session.couponTotal;
+      console.log('session.couponTotal=',session.couponTotal);
+      console.log('session=',session);
+      if(session.couponTotal!=0){
+        userData.cart.totalPrice = session.couponTotal;
+      }
       const updatedTotal = await userData.save();
-      
+      console.log('completeUser.cart.totalPrice=',completeUser.cart.totalPrice);
       if (completeUser.cart.totalPrice > 0) {
-       
+
         const order = Order({
 
           userId: session.userId,
           country: req.body.country,
-          name: req.body.name,          
+          name: req.body.name,
+          
           address: req.body.address,         
           state: req.body.state,
           postcode: req.body.postcode,
@@ -907,10 +911,19 @@ const storeOrder = async (req, res) => {
         
         
         console.log(orderData);
-      
+        // console.log(req.body.payment);
+        // await orderData.save();
         if (req.body.payment === 'COD') {
           res.redirect('/success');
-        
+        // } else if (req.body.payment === 'PayPal') {
+        //   const usTotal=(completeUser.cart.totalPrice)/80;
+        //   console.log(usTotal);
+        //   res.render('user/paypal', {
+        //     userId: session.userId,
+        //     total: usTotal.toFixed(2),
+        //     count: userData.cart.totalqty,
+        //     wcount: userData.wishlist.totalqty,
+        //   });
         } else {
           res.redirect('/success');
         }
@@ -1062,7 +1075,6 @@ const orderHistory = async(req,res)=>{
   console.log(" user order history")
   const orderdata = await Order.find({userId:req.session.userId})
   console.log(orderdata.length)
-  
   res.render("orderhistory",{order:orderdata})
 
 }

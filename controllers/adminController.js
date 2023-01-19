@@ -214,6 +214,21 @@ const   deleteproduct = async (req,res)=>{
       }
 
 }
+const   retrieveproduct = async (req,res)=>{
+  try {
+    const id = req.query.id;
+    await Product.findByIdAndUpdate({_id:id},{$set:{isavailable:0}});
+    res.redirect('/admin/productlist');
+    console.log("del")
+  } catch (error) {
+    console.log("delete product error")
+  }
+
+}
+
+
+
+
 const editproduct = async (req,res)=>{
   try {
     const id = req.query.id; 
@@ -322,42 +337,34 @@ const loadCategory = async (req,res)=>{
 }
 const insertCategory = async (req,res)=>{
     try {
+      const  name = req.body.name.toLowerCase()
     const categoryData = await Category.find()   
-      const ca = await Category.findOne({category:req.body.name})
+      const ca = await Category.findOne({category:name })
       if(ca){
         res.render("Category",{cat:categoryData,message:"Category already used"})
       }
       else{
-        const category = new Category({
-     
-          category:req.body.name
-        
-       })
-       console.log(category)
-       const categoryData = await category.save();
-       
+        const category = new Category({    
+          category:req.body.name        
+       })       
+       const categoryData = await category.save();       
        if(categoryData){
-         res.redirect("/admin/Category")
-         console.log(categoryData)
+         res.redirect("/admin/Category")         
        }
-      }
-      
+      }      
       } catch (error) {
       console.log(error)
     }
-
 }
 const   deleteCategory = async (req,res)=>{
   try {
     console.log("delete catgry loaded")
     const id = req.query.id;
     await Category.findByIdAndUpdate({_id:id},{$set:{isavailable:1}});
-    res.redirect('/admin/Category');
-    
+    res.redirect('/admin/Category');    
   } catch (error) {
     console.log("delete product error")
   }
-
 }
 
 const   showCategory = async (req,res)=>{
@@ -365,12 +372,10 @@ const   showCategory = async (req,res)=>{
     console.log("show catgry loaded")
     const id = req.query.id;
     await Category.findByIdAndUpdate({_id:id},{$set:{isavailable:0}});
-    res.redirect('/admin/Category');
-    
+    res.redirect('/admin/Category');    
   } catch (error) {
     console.log("show product error")
   }
-
 }
 
 
@@ -382,17 +387,11 @@ const loadCoupon = async(req,res)=>{
     console.log(coupondata.length)
     if(coupondata){
       res.render("coupon",{coupondata:coupondata })
-        
-        // couponname:coupondata.name,
-        // couponid:coupondata._id,
-        // coupondiscount:coupondata.discount,
-        // couponusedby:coupondata.usedBy
-     
+
     }
     else{
       res.render("coupon",{ message: " No coupon available please add " })
-    }
-   
+    }   
   } catch (error) {
     console.log(error)
   }
@@ -403,15 +402,22 @@ const addCoupon = async(req,res)=>{
         console.log("add coupon starts");
         console.log(req.body.name)
   try {
-
-    const coupon =  new Coupon({
-      name:req.body.name,
-      discount:req.body.discount,
-      usedBy:req.session.userid
-     })
-     const couponData = await coupon.save();
-     console.log(couponData)     
-     res.redirect("/admin/coupon")
+    const  name = req.body.name.toLowerCase()
+    const coupondata = await Coupon.find()   
+    const ca = await Coupon.findOne({category:name })
+    if(ca){
+        res.render("coupon",{coupondata:coupondata, message:"coupon already used"})
+    }
+    else{
+      const coupon =  new Coupon({
+        name:req.body.name,
+        discount:req.body.discount,
+        usedBy:req.session.userid
+       })
+       const couponData = await coupon.save();
+       console.log(couponData)
+       res.redirect("/admin/coupon")
+    } 
   } catch (error) {
     console.log(error)
   }
@@ -428,6 +434,19 @@ const deleteCoupon = async (req,res)=>{
   } catch (error) {
     console.log(error)
   }
+
+
+}
+const showCoupon = async (req,res)=>{
+    
+  console.log(req.query.id)
+try {
+    
+     await Coupon.findByIdAndUpdate({_id:req.query.id},{$set:{isavailable:0}})
+    res.redirect("/admin/coupon")
+} catch (error) {
+  console.log(error)
+}
 
 
 }
@@ -635,13 +654,16 @@ module.exports = {
   loadCoupon,
   addCoupon,
   deleteCoupon,
+  showCoupon,
   orderHistory,
   confirmOrder,
   cancelOrder,
   deliverOrder,
   addBanner,
   getBanner,
-  showCategory
+  showCategory,
+  retrieveproduct
+
   // loadAdminBanners,
   // currentBanner,
   // addBanner

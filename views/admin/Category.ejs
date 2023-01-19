@@ -65,10 +65,10 @@
                                  
                                     <td>
                                       <% if(cat[i].isavailable==0 ){  %>
-                                        <button type="button" onclick="return confirm('do you want to hide category <%= cat[i].category%>')" class="btn btn-danger" style="font-size:20px; "><a style="color: white;" href="/admin/deleteCategory?id=<%= cat[i]._id %>" >Hide</a></button>
+                                        <button type="button"  class="btn btn-danger" style="font-size:20px; "><a class="hide" style="color: white;" href="/admin/deleteCategory?id=<%= cat[i]._id %>" >Hide</a></button>
                                         <%  }
                                        else{ %>
-                                        <button type="button" onclick="return confirm('do you want to show the category <%= cat[i].category%>')" class="btn btn-danger" style="font-size:20px; "><a style="color: white;" href="/admin/showCategory?id=<%= cat[i]._id %>" >Show</a></button>
+                                        <button type="button"  class="btn btn-danger" style="font-size:20px; "><a class="retrieve" style="color: white;" href="/admin/showCategory?id=<%= cat[i]._id %>" >Show</a></button>
                                         <% } %>
                        
                        
@@ -98,6 +98,50 @@
         </div>
       </div>
 
+      <script>
+        $(".hide").on("click", function (e) {
+            e.preventDefault()
+            var self = $(this)
+            Swal.fire({
+                title: 'Do you want to hide the category?',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'Yes, hide ',
+                denyButtonText: `No,dont  hide`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    //     Swal.fire('Saved!', '', 'success')
+                    // } else if (result.isDenied) {
+                    //     Swal.fire('Changes are not saved', '', 'info')
+                    location.href = self.attr("href")
+                }
+            })
 
+
+        })
+
+        $(".retrieve").on("click", function (e) {
+            e.preventDefault()
+            var self = $(this)
+            Swal.fire({
+                title: 'Do you want to show the product?',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'Yes, show ',
+                denyButtonText: `No,dont  show`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    //     Swal.fire('Saved!', '', 'success')
+                    // } else if (result.isDenied) {
+                    //     Swal.fire('Changes are not saved', '', 'info')
+                    location.href = self.attr("href")
+                }
+            })
+
+
+        })   
+    </script>
 
 <%- include ('../partials/adminFooter.ejs') %>
