@@ -43,6 +43,11 @@ const orderSchema = new mongoose.Schema({
         type:Number,
         default:0
       },
+      createdAt: {
+        type: Date,
+        immutable: true,
+        default: () => Date.now()
+      },
    
     products:{
         item:[{

@@ -109,10 +109,7 @@ const editAddress = async(req,res)=>{
     console.log("editing starts  "+req.query.id)
     const userdata = await User.findById({_id:req.session.userId})
     const addressData = await userdata.populate('Address.item')
-    // console.log("addressData-----"+addressData)
-    const addressdata = addressData.Address.item
-    // console.log("addressdata----- "+addressdata)
-    
+    const addressdata = addressData.Address.item   
     for(let key of addressdata){
         if(key._id==req.query.id){
           console.log(key)
@@ -546,25 +543,6 @@ const loadWishlist = async(req,res)=>{
   }
 }
 
-// const loadCart = async(req,res)=>{
-//   try {
-//     userSession = req.session
-//     if( userSession.userId){
-//       const cart = await Cart.find( )
-    
-//        res.render("cart",{C:cart})
-//        console.log("user loged in cart loaded")
-//     }
-//     else{
-//       console.log("user not logged in")
-//       res.redirect("/login")
-//     }
-    
-
-//   } catch (error) {
-//     console.log(error)
-//   }
-// } 
   const addToWishlist = async (req,res)=>{
     try {
       console.log("addto wishlist loaded")
@@ -599,61 +577,7 @@ const loadWishlist = async(req,res)=>{
     }
   }
   
-  
 
-
-
-
-// const addToCart = async(req,res,next)=>{
-//   const productId = req.query.id
-//   // userSession = req.session
-//   // const userData =await User.findById({_id:userSession.userId})
-//   const productData =await Product.findById({ _id:productId })
-//   req.user.addToCart(productData)
-//   res.redirect('/')
-// }
-
-// const addtocart = async (req,res)=>{
-//   console.log(req.query.id)
-//   const productId = req.query.id
-//   userSession = req.session
-//   try {
-//       const productData = await Product.findById({_id:req.query.id}) 
-//      console.log(productData)
-//      console.log(productData.product_name)
-//     if(req.session.id){
-//       console.log("auth checked")
-//       const cart = new Cart({
-//         product_name: productData.product_name,
-//         price:productData.price,
-//         image:productData.image
- 
-       
-//       });
- 
-//       // console.log(cart)
- 
-//       const cartData = await cart.save();
-//       // console.log(cartData)
-//       const C = await Cart.find( )
-//       console.log(C)
- 
-//         res.render("cart",{C:C})
-       
-     
-//    }
-//    else{
-//     res.render("login")
-//    }
-//     }
-//       catch (error) {
-//     console.log(error)
-//   }
-// }
-      // product_name: productData.product_name,
-      // price:productData.price,
-      // image:productData.image
-           
       const deletecart = async(req,res,next)=>{
         console.log("delete cart begins")
         const productId = req.query.id       
@@ -671,23 +595,6 @@ const loadWishlist = async(req,res)=>{
       res.redirect('/wishlist')
   }
 
-// const deletecart = async(req,res)=>{
-//   const cartdata=req.query.id;
-//   console.log(cartdata)
-//   userSession = req.session
-//   console.log("usersession.userid    "+userSession.userId)
-
-//   try {
-    
-//      console.log(cartdata)
-//       const deleteproduct = await  User.cart.deleteOne({_id:cartdata})
-//     console.log(deleteproduct)
-//     res.redirect("/cart")
-
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 const edit_Quantity = async(req,res)=>{
 
   console.log("edit quantity starts")
@@ -785,52 +692,6 @@ const  checkOut = async(req,res)=>{
         
 }
 
-// const PostcheckOut = async (req,res)=>{
-  
-//     console.log("post checkout")
-//     const userData =await User.findById({ _id:req.session.userId })
-//     const completeUser = await userData.populate('cart.item.productId')
-//     try {
-
-    
-//       const order=Order({
-//         userId:req.session.userId,
-//         name:req.body.name,
-//         country:req.body.country,
-//         address:req.body.address,
-//         state:req.body.state,
-//         postcode :req.body.postcode,
-//         phone:req.body.phone,
-//         email:req.body.email,
-//         products:completeUser.cart
-//       })
-      
-//       const orderData =  await order.save()
-//       console.log("order 1")
-//       console.log( orderData)
-//       const userData =await User.findById({ _id:req.session.userId })
-
-//       const addressdetails={
-//         name:req.body.name,
-//         country:req.body.country,
-//         address:req.body.address,
-//         state:req.body.state,
-//         postcode :req.body.postcode,
-//         phone:req.body.phone,
-//         email:req.body.email,
-//       }
-//       userData.addToAddress(addressdetails)
-  
-//       // orderData.addToOrders(addressdetails)
-//       res.redirect('/success')
-//     }
-
-  
-//      catch (error) {
-//       console.log(error)
-//     }
-    
-//   }
   
 const storeOrder = async (req, res) => {
   nocoupon=false
@@ -876,13 +737,12 @@ const storeOrder = async (req, res) => {
         for (let key of order.products.item) {
           orderProductStatus.push(0);
         }
-        // console.log('orderProductStatus',orderProductStatus);
+      
         order.productReturned = orderProductStatus;
 
         const orderData = await order.save();
         console.log(orderData);
         session.currentOrder = orderData._id;
-        // console.log('userSession.currentOrder',userSession.currentOrder);
 
         const userAdress =await User.findById({ _id:req.session.userId })
 
@@ -906,24 +766,11 @@ const storeOrder = async (req, res) => {
         } catch (error) {
           console.log("error")
         }
-         
-         
-        
-        
-        console.log(orderData);
-        // console.log(req.body.payment);
-        // await orderData.save();
+       
+        console.log(orderData);   
         if (req.body.payment === 'COD') {
           res.redirect('/success');
-        // } else if (req.body.payment === 'PayPal') {
-        //   const usTotal=(completeUser.cart.totalPrice)/80;
-        //   console.log(usTotal);
-        //   res.render('user/paypal', {
-        //     userId: session.userId,
-        //     total: usTotal.toFixed(2),
-        //     count: userData.cart.totalqty,
-        //     wcount: userData.wishlist.totalqty,
-        //   });
+      
         } else {
           res.redirect('/success');
         }
@@ -1022,22 +869,14 @@ const viewOrder = async (req,res)=>{
             const orderdata2 = await Order.find({userId:req.session.userId})
             const productdata = await orderdata.populate("products.item")
             const productData = productdata.products
+            console.log("productData  order price"+productdata.products.item[0].price)
             console.log("productdata"+productdata.products.item.length)
             const userData = await User.findById({ _id:usersession.userId });
             const completeUser = await orderdata.populate('products.item.productId')
             console.log("ordered products    "+ productdata.products)
             console.log("ordered user    "+userData)
             console.log("complete user    "+ completeUser)
-            // for(let key in completeUser.products.item){
-            //   console.log("key"+key.productId);
-            // }
-
-            // const image = await Product.findById({_id:productData.iproductId})
-            // const userdata = await User.findById({_id:req.session.userId})
-            // const adressData = await userdata.populate('Address.item')
-            // const addressdata = adressData.Address.item
           
-           
             res.render("vieworder",{orderitem:productData,order:productdata,cartproducts:completeUser.cart,id:usersession.userId})
         }
         else{
@@ -1103,7 +942,6 @@ module.exports = {
   loadShop,
   productdetails,
   addToCart ,
-  // userlogout,
   loadCart,
   deletecart,
   userLogout,

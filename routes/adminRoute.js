@@ -3,7 +3,7 @@ const admin_route = express();
 const session = require("express-session");
 const config = require("../config/config");
 const adminController = require("../controllers/adminController");
-const adminauth = require("../middleware/adminAuth");
+const adminauth = require("../middleware/adminauth");
 const nocache = require("nocache")
 // const bodyParser = require("body-parser");
 
@@ -35,8 +35,10 @@ admin_route.set("views","./views/admin");
 
 admin_route.get("/",adminauth.isLogout,adminController.adminload);
 admin_route.get("/home",adminauth.isLogin,adminController.adminhome);
-admin_route.get("/dashboard",adminauth.isLogin,adminController.adminDashboard);
+admin_route.get("/userslist",adminauth.isLogin,adminController.userslist);
 
+admin_route.get("/admindashboard",adminauth.isLogin,adminController.admindashboard);
+admin_route.get("/export",adminauth.isLogin,adminController.exportdata);
 
 admin_route.get("/block-user",adminauth.isLogin,adminController.block_user);
 admin_route.get("/unblock-user",adminauth.isLogin,adminController.unblock_user);

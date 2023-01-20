@@ -39,22 +39,26 @@
                 href="/admin/orderhistory?id=DELIVERED"
                 class="btn btn-primary"
               >
-                Delivered Orders
+              <span> Delivered Orders</span>  
+             
               </a>
+            </div>
+            <div class="m-3">
+              <a href="/admin/export" class="btn btn-success" style="font-weight: bold; border-radius: 20px">export</a>
             </div>
           </div>
 <div class="table-responsive">
     <table id="orderlist" class="table">     
           <% if(id=='CONFIRM' ){ %>
         
-         
+        
               <thead>
                 <tr>
                   <th>
                    Order Id
                   </th>
                   <th>
-                   Customer Id
+                   Customer Name
                   </th>
                   <th>
                     Payment mode
@@ -127,14 +131,14 @@
                       <% } %>
               </tbody>
             </table>
-        </div>
+            </div>
              
               
         
           
         <div class="table-responsive">
     <table id="orderlist" class="table"> 
-
+      
           <% }else if(id=='DELIVERED' ){ %>
 
            
@@ -144,7 +148,7 @@
                    Order Id
                   </th>
                   <th>
-                   Customer Id
+                   Customer Name
                   </th>
                   <th>
                     Payment mode
@@ -229,7 +233,7 @@
                    Order Id
                   </th>
                   <th>
-                   Customer Id
+                   Customer Name
                   </th>
                   <th>
                     Payment mode
@@ -252,8 +256,8 @@
                 </tr>
               </thead>
               <tbody>
+                
                 <% if(order.length>0 ){
-
                   for(let i=0;i<order.length;i++){ %>
                     <tr>
                       <td>
@@ -269,14 +273,10 @@
                         <%= order[i].offer %>
                       </td>
                       <td>
-
-                        <%= order[i].products.totalPrice %>
-
-                                            </td>
+                        <%= order[i].products.totalPrice %></td>
                      <td>
                         <%=order[i].status %>
                         </td>
-                       
                       <td>                        
                         <button type="button" class="btn btn-danger" style="font-size:20px; width:22vh;  margin-bottom: 10px;"><a style="color: white;  width: fit-content;" href="/admin/cancelorder?id=<%=order[i]._id %>">Cancel</a></button>
                         <br>

@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const Coupon = require("../models/couponModel");
 const Order = require("../models/orderModel");
 const Banner = require("../models/bannerModel");
+const exceljs = require("exceljs")
 
 
 const adminload = async (req, res) => {
@@ -115,7 +116,7 @@ const  logout = async (req, res) => {
    }
   }
 
-  const  adminDashboard  = async (req,res)=>{
+  const  userslist  = async (req,res)=>{
     try {
       const usersData = await User.find({is_admin:0})
       console.log(usersData)
@@ -123,6 +124,56 @@ const  logout = async (req, res) => {
     } 
     catch (error) {
      console.log(error.message);
+    }
+   }
+
+   const admindashboard = async (req,res)=>{
+    try {
+      
+      res.render("admindashboard")
+
+    } catch (error) {
+      console.log(error);
+    }
+   }
+   const exportdata = async (req,res)=>{
+
+    try {
+      const workbook = new exceljs.Workbook();
+      const worksheet = workbook.addWorksheet("sales Data ")
+
+      worksheet.columns = [
+        {header:" order Id",key:"_id"},  
+        {header:"Name",key:"name"},
+        {header:"Offer",key:"offer"},
+        {header:"Discount",key:"discount"},
+        {header:"Payment",key:"payment"},
+        {header:"Status",key:"status"}
+      ]
+      let counter = 1;
+      const orderData = await Order.find()
+      
+      orderData.forEach((order)=>{
+        order._no = counter;
+        worksheet.addRow(order)
+        counter++
+      });
+      worksheet.getRow(1).eachCell((cell)=>{
+        cell.font = {bold:true}
+      })
+      res.setHeader(
+       "Content-Type",
+       "application/vnd.openxmlformats-officedocument.spreadsheatml.sheet" 
+      );
+
+      res.setHeader("Content-Disposition","attachment;filename=users.xlsx");
+      return workbook.xlsx.write(res).then(()=>{
+        res.status(200);
+      })
+
+
+    } catch (error) {
+     console.log(error);
     }
    }
 
@@ -252,13 +303,14 @@ const viewOrderProduct =  async(req,res)=>{
   console.log(req.query.id)
   try {
 
-    const order2 = await Order.findById({_id:req.query.id})
-    
-    console.log(order2.products.item[0].productId)
-      const productdata = await Product.findOne({_id:order2.products.item[0].productId})
-      console.log("productdata "+productdata)
-      console.log("productdata category  "+productdata.name)
-      res.render("viewproductdetails",{product:productdata})      
+    const orderdata = await Order.findById({_id:req.query.id})
+    const productdata = await orderdata.populate("products.item")
+    console.log(orderdata.products.item[0].productId)
+    console.log("productData  order price "+productdata.products.item[0].price)
+      const productData = await Product.findOne({_id:orderdata.products.item[0].productId})
+      console.log("productdata "+productData)
+      console.log("productdata category  "+productData.name)
+      res.render("viewOrder",{product:productData,price:productdata.products.item[0].price})      
       // console.log(product)
   } catch (error) {
     console.log(error)
@@ -278,7 +330,7 @@ const viewProduct =  async(req,res)=>{
       // console.log("productdata "+productdata)
       // console.log("productdata category  "+productdata.name)
       res.render("viewproductdetails",{product:productdetails})      
-      console.log(product)
+     
   } catch (error) {
     console.log(error)
   }
@@ -456,11 +508,13 @@ const orderHistory = async (req,res)=>{
 try {   
   id = req.query.id   
   if(req.query.id){
-    const orderData = await Order.find() 
+    const orderData = await Order.find().sort({createdAt:-1}); 
+    console.log("sort 1 "+orderData)
     res.render("orderhistory",{order:orderData,id:id})
   } 
   else{
-    const orderdata = await Order.find()
+    const orderdata = await Order.find().sort({createdAt:-1});
+    console.log("sort 2 "+orderdata)
     res.render("orderhistory",{order:orderdata,id:false})
   }
   
@@ -635,7 +689,9 @@ module.exports = {
   adminload,
   verifyLogin,
   adminhome,
-  adminDashboard,
+  userslist,
+  admindashboard,
+  exportdata,
   block_user,
   unblock_user,
   user_Profile,

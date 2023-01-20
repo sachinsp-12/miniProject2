@@ -47,10 +47,11 @@
             <label for="exampleTextarea1">Description</label>
             <textarea class="form-control" name="description" id="exampleTextarea1" rows="2"  value="<%=  product.description%>" ></textarea>
           </div> 
+          <img src="/assets/uploads/<%=  product.image%>" width="100px" height="100px" alt="">
           <div class="d-flex flex-row align-items-center mb-4">
             <div class="form-outline flex-fill mb-0">
             <label class="form-label" for="form3Example4c">Image</label>
-            <input type="file" id="form3Example4c" class="form-control" name="image" value="<%=  product.image%>" />
+            <input type="file"  id="form3Example4c" class="form-control" name="image" value="hello.jpg" />
           </div>
         </div>
           <button type="submit" class="btn btn-success mr-2">Submit</button>
