@@ -865,21 +865,27 @@ const viewOrder = async (req,res)=>{
         console.log(req.query.id)
         const id = req.query.id
         if(usersession){
-            const orderdata = await Order.findById({_id:id})
-            const orderdata2 = await Order.find({userId:req.session.userId})
-            const productdata = await orderdata.populate("products.item")
-            const productData = productdata.products
-            console.log("productData  order price"+productdata.products.item[0].price)
-            console.log("productdata"+productdata.products.item.length)
-            const userData = await User.findById({ _id:usersession.userId });
-            const completeUser = await orderdata.populate('products.item.productId')
-            console.log("ordered products    "+ productdata.products)
-            console.log("ordered user    "+userData)
-            console.log("complete user    "+ completeUser)
-          
-            res.render("vieworder",{orderitem:productData,order:productdata,cartproducts:completeUser.cart,id:usersession.userId})
-        }
-        else{
+            const orderdata = await Order.findById({_id:id}).exec(async function(err,orderdata){
+              if(orderdata){
+                const orderdata2 = await Order.find({userId:req.session.userId})
+                const productdata = await orderdata.populate("products.item")
+                const productData = productdata.products
+                console.log("productData  order price"+productdata.products.item[0].price)
+                console.log("productdata"+productdata.products.item.length)
+                const userData = await User.findById({ _id:usersession.userId });
+                const completeUser = await orderdata.populate('products.item.productId')
+                console.log("ordered products    "+ productdata.products)
+                console.log("ordered user    "+userData)
+                console.log("complete user    "+ completeUser)
+              
+                res.render("vieworder",{orderitem:productData,order:productdata,cartproducts:completeUser.cart,id:usersession.userId})
+            }
+              else if(err){
+                res.redirect('*')
+              }
+            })           
+            }
+            else{
           res.redirect("/")
         }
 

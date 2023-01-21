@@ -303,15 +303,22 @@ const viewOrderProduct =  async(req,res)=>{
   console.log(req.query.id)
   try {
 
-    const orderdata = await Order.findById({_id:req.query.id})
-    const productdata = await orderdata.populate("products.item")
-    console.log(orderdata.products.item[0].productId)
-    console.log("productData  order price "+productdata.products.item[0].price)
-      const productData = await Product.findOne({_id:orderdata.products.item[0].productId})
-      console.log("productdata "+productData)
-      console.log("productdata category  "+productData.name)
-      res.render("viewOrder",{product:productData,price:productdata.products.item[0].price})      
-      // console.log(product)
+    const orderdata = await Order.findById({_id:req.query.id}).exec(async function(err,orderdata){
+
+      if(orderdata){
+        const productdata = await orderdata.populate("products.item")
+        console.log(orderdata.products.item[0].productId)
+        console.log("productData  order price "+productdata.products.item[0].price)
+          const productData = await Product.findOne({_id:orderdata.products.item[0].productId})
+          console.log("productdata "+productData)
+          console.log("productdata category  "+productData.name)
+          res.render("viewOrder",{product:productData,price:productdata.products.item[0].price})
+      }
+      else if(err){
+        res.redirect('*')
+      }
+    })
+
   } catch (error) {
     console.log(error)
   }
@@ -323,13 +330,22 @@ const viewProduct =  async(req,res)=>{
   console.log(req.query.id)
   try {
 
-    const productdetails = await Product.findById({_id:req.query.id})
+    const productdetails = await Product.findById({_id:req.query.id}).exec(async function(err,productdetails){
     
-    console.log(productdetails)
+      if(productdetails){
+        console.log(productdetails)
+        res.render("viewproductdetails",{product:productdetails}) 
+      }
+      else if(err){
+        res.redirect('*')
+      }
+    })
+   
+
       // const productdata = await Product.findOne({_id:order2.products.item[0].productId})
       // console.log("productdata "+productdata)
       // console.log("productdata category  "+productdata.name)
-      res.render("viewproductdetails",{product:productdetails})      
+          
      
   } catch (error) {
     console.log(error)
